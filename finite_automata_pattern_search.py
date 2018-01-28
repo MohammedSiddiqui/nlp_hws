@@ -15,9 +15,6 @@ def get_next_state(str_to_find, pat_len, state, x):
     # Starting value
     i = 0
 
-    # next_state finally contains the longest prefix
-    # which is also suffix in "pat[0..state-1]c"
-
     # Start from the largest possible value and
     # stop when you find a prefix which is also suffix
     for next_state in range(state, 0, -1):
@@ -32,8 +29,7 @@ def get_next_state(str_to_find, pat_len, state, x):
 
 
 def compute_transition_states(pat_to_search, pat_len):
-    trans_states = [[0 for i in range(NO_OF_CHARS)]
-                    for _ in range(pat_len + 1)]
+    trans_states = [[0 for i in range(NO_OF_CHARS)] for _ in range(pat_len + 1)]
 
     for state in range(pat_len + 1):
         for x in range(NO_OF_CHARS):
@@ -49,16 +45,22 @@ def search_pattern(pattern_to_search, full_txt):
     transition_states = compute_transition_states(pattern_to_search, pattern_len)
 
     state = 0
+    state_found = False
+
     for i in range(full_len):
         state = transition_states[state][get_ascii(full_txt[i])]
         if state == pattern_len:
+            state_found = True
             print("Pattern found at index: {}".format(i - pattern_len + 1))
+
+    if not state_found:
+        print ("The pattern doesn't exist")
 
 
 # Program initiator
 def main():
     full_text = "Hello there! My name is Mohammed Siddiqui."
-    pattern_to_find = "Mohammed Siddiqui"
+    pattern_to_find = "Siddiqui"
 
     search_pattern(pattern_to_find, full_text)
 
