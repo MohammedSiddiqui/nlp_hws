@@ -65,5 +65,4 @@ def main():
     search_pattern(pattern_to_find, full_text)
 
 
-if __name__ == '__main__':
-    main()
+main()
