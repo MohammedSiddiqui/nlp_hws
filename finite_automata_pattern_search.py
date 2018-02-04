@@ -1,4 +1,4 @@
-NO_OF_CHARS = 256
+TOTAL_CHARS = 256
 
 
 def get_ascii(char):
@@ -29,10 +29,10 @@ def get_next_state(str_to_find, pat_len, state, x):
 
 
 def compute_transition_states(pat_to_search, pat_len):
-    trans_states = [[0 for i in range(NO_OF_CHARS)] for _ in range(pat_len + 1)]
+    trans_states = [[0 for i in range(TOTAL_CHARS)] for _ in range(pat_len + 1)]
 
     for state in range(pat_len + 1):
-        for x in range(NO_OF_CHARS):
+        for x in range(TOTAL_CHARS):
             z = get_next_state(pat_to_search, pat_len, state, x)
             trans_states[state][x] = z
 
@@ -51,7 +51,11 @@ def search_pattern(pattern_to_search, full_txt):
         state = transition_states[state][get_ascii(full_txt[i])]
         if state == pattern_len:
             state_found = True
-            print("Pattern found at index: {}".format(i - pattern_len + 1))
+            starting_index = i - pattern_len + 1
+            ending_index = starting_index + pattern_len
+            pattern_output = ''.join([full_txt[index] for index in range(starting_index, ending_index)])
+            print("Pattern found at index: {}".format(starting_index))
+            print ("Pattern output: {}".format(pattern_output))
 
     if not state_found:
         print ("The pattern doesn't exist")
@@ -59,8 +63,8 @@ def search_pattern(pattern_to_search, full_txt):
 
 # Program initiator
 def main():
-    full_text = "Hello there! My name is Mohammed Siddiqui."
-    pattern_to_find = "Siddiqui"
+    full_text = "Hello there! Batman vs Mohammed Siddiqui is no fight at all, poor Batman doesn't stand a chance, lol ..."
+    pattern_to_find = "Mohammed Siddiqui"
 
     search_pattern(pattern_to_find, full_text)
 
